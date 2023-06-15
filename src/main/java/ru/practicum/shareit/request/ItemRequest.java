@@ -7,9 +7,6 @@ import ru.practicum.shareit.user.User;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-/**
- * TODO Sprint add-item-requests.
- */
 
 @Data
 @RequiredArgsConstructor

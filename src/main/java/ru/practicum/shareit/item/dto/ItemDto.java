@@ -7,10 +7,6 @@ import ru.practicum.shareit.user.User;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-/**
- * TODO Sprint add-controllers.
- */
-
 @Data
 @Builder
 public class ItemDto {
@@ -26,7 +22,14 @@ public class ItemDto {
     @NotNull
     private Boolean available;
 
-    private User owner;
+    private Owner owner;
 
     private Long requestId;
+
+    @Data
+    public static class Owner {
+        private final long id;
+        private final String name;
+        private final String email;
+    }
 }
