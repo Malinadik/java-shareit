@@ -11,7 +11,7 @@ public interface UserService {
 
     UserDto addUser(UserDto user) throws DuplicateException;
 
-    UserDto updateUser(Long userId, User user) throws DuplicateException;
+    UserDto updateUser(Long userId, UserDto user) throws DuplicateException;
 
     Boolean deleteUser(Long userId);
 }
