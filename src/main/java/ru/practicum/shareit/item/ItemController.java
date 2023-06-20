@@ -7,6 +7,7 @@ import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,9 @@ public class ItemController {
 
     @GetMapping("/search")
     public List<ItemDto> searchItems(@RequestParam @DefaultValue(value = " ") String text) {
+        if (text.isBlank()) {
+            return new ArrayList<>();
+        }
         return itemService.searchItems(text);
     }
 

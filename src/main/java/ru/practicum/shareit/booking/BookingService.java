@@ -16,7 +16,7 @@ public interface BookingService {
 
     BookingDto getBookingById(@RequestHeader("X-Sharer-User-Id") Long id, @PathVariable Long bookingId);
 
-    List<BookingDto> getAllBookingByState(Long id, String state);
+    List<BookingDto> getAllBookingByState(Long id, State state);
 
-    List<BookingDto> getAllOwnersBookingByState(Long id, String state);
+    List<BookingDto> getAllOwnersBookingByState(Long id, State state);
 }

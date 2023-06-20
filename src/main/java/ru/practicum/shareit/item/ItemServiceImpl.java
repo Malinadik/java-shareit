@@ -61,9 +61,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public List<ItemDto> searchItems(String text) {
-        if (text.isBlank()) {
-            return new ArrayList<>();
-        }
         return itemRepository.findByNameOrDescriptionAvailable(text)
                 .stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
     }

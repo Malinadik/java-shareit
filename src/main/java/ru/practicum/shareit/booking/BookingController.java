@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingEntryDto;
+import ru.practicum.shareit.exceptions.NotSupportedStateException;
 
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
@@ -36,12 +37,20 @@ public class BookingController {
     @GetMapping()
     public List<BookingDto> getAllBookingByState(@RequestHeader("X-Sharer-User-Id") Long id,
                                                  @RequestParam(defaultValue = "ALL") String state)  {
-        return bookingService.getAllBookingByState(id, state);
+        return bookingService.getAllBookingByState(id, convert(state));
     }
 
     @GetMapping("/owner")
     public List<BookingDto> getAllItemsBookings(@RequestHeader("X-Sharer-User-Id") Long id,
                                                 @RequestParam(defaultValue = "ALL") String state) {
-        return bookingService.getAllOwnersBookingByState(id, state);
+        return bookingService.getAllOwnersBookingByState(id, convert(state));
+    }
+
+    public static State convert(String state) {
+        try {
+            return State.valueOf(state);
+        } catch (Exception e) {
+            throw new NotSupportedStateException("Unknown state: " + state);
+        }
     }
 }

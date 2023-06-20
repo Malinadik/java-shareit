@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.practicum.shareit.booking.BookingMapper.toBooking;
 import static ru.practicum.shareit.booking.BookingMapper.toBookingDto;
 
 @Slf4j
@@ -42,9 +43,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotAvailableException("Not available");
         }
 
-        Booking booking = Booking.builder().start(bookingDto.getStart()).end(bookingDto.getEnd()).build();
-        booking.setBooker(userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found")));
-        booking.setItem(item);
+        Booking booking = toBooking(bookingDto, item, userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found")));
         booking.setStatus(Status.WAITING);
         return toBookingDto(bookingRepository.save(booking));
     }
@@ -92,14 +91,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDto> getAllBookingByState(Long id, String state) {
+    public List<BookingDto> getAllBookingByState(Long id, State state) {
         if (!userRepository.existsById(id)) {
             throw new NotFoundException("User not found!");
         }
         List<Booking> bookingList = new ArrayList<>();
         Sort sort = Sort.by(Sort.Direction.DESC, "start");
         LocalDateTime now = LocalDateTime.now();
-        switch (convert(state)) {
+        switch (state) {
             case ALL:
                 bookingList = bookingRepository.findAllByBookerId(id, sort);
                 break;
@@ -122,14 +121,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingList.stream().map(BookingMapper::toBookingDto).collect(Collectors.toList());
     }
 
-    public List<BookingDto> getAllOwnersBookingByState(Long id, String state) {
+    public List<BookingDto> getAllOwnersBookingByState(Long id, State state) {
         if (!userRepository.existsById(id)) {
             throw new NotFoundException("User not found!");
         }
         List<Booking> bookingList = new ArrayList<>();
         Sort sort = Sort.by(Sort.Direction.DESC, "start");
         LocalDateTime now = LocalDateTime.now();
-        switch (convert(state)) {
+        switch (state) {
             case ALL:
                 bookingList = bookingRepository.findAllByItemOwnerId(id, sort);
                 break;
@@ -150,13 +149,5 @@ public class BookingServiceImpl implements BookingService {
                 break;
         }
         return bookingList.stream().map(BookingMapper::toBookingDto).collect(Collectors.toList());
-    }
-
-    public static State convert(String state) {
-        try {
-            return State.valueOf(state);
-        } catch (Exception e) {
-            throw new NotSupportedStateException("Unknown state: " + state);
-        }
     }
 }

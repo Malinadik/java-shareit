@@ -1,5 +1,9 @@
 package ru.practicum.shareit.item.comment;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentMapper {
 
     public static Comment toComment(CommentDto commentDto) {

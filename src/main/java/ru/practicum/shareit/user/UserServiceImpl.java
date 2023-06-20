@@ -53,12 +53,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Boolean deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         if (userRepository.existsById(userId)) {
             itemRepository.deleteAll(itemRepository.findAllByOwnerId(userId));
             userRepository.deleteById(userId);
         }
-        return !userRepository.existsById(userId);
     }
 
 

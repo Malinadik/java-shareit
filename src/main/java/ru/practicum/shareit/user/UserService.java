@@ -13,5 +13,5 @@ public interface UserService {
 
     UserDto updateUser(Long userId, UserDto user) throws DuplicateException;
 
-    Boolean deleteUser(Long userId);
+    void deleteUser(Long userId);
 }
