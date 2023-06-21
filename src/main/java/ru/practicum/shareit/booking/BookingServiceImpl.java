@@ -11,6 +11,7 @@ import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.NotSupportedStateException;
 import ru.practicum.shareit.item.ItemRepository;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.UserRepository;
 
 import javax.transaction.Transactional;
@@ -42,9 +43,8 @@ public class BookingServiceImpl implements BookingService {
         if (!item.getAvailable()) {
             throw new NotAvailableException("Not available");
         }
-
-        Booking booking = toBooking(bookingDto, item, userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found")));
-        booking.setStatus(Status.WAITING);
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
+        Booking booking = toBooking(bookingDto, item, user);
         return toBookingDto(bookingRepository.save(booking));
     }
 

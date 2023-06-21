@@ -61,6 +61,7 @@ public class BookingMapper {
         Booking booking = Booking.builder().start(bookingDto.getStart()).end(bookingDto.getEnd()).build();
         booking.setBooker(booker);
         booking.setItem(item);
+        booking.setStatus(Status.WAITING);
         return booking;
     }
 }
