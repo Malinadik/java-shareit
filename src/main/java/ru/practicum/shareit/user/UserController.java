@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public Boolean deleteUser(@PathVariable Long userId) {
-        return service.deleteUser(userId);
+    public void deleteUser(@PathVariable Long userId) {
+        service.deleteUser(userId);
     }
 
     @PostMapping
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public UserDto updateUser(@PathVariable Long userId, @RequestBody User user) throws DuplicateException {
+    public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto user) throws DuplicateException {
         return service.updateUser(userId, user);
     }
 }
