@@ -1,6 +1,8 @@
 package ru.practicum.shareit.booking.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.FutureOrPresent;
@@ -9,7 +11,8 @@ import javax.validation.executable.ValidateOnExecution;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
+@Builder
+@AllArgsConstructor(onConstructor = @__(@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)))
 @ValidateOnExecution
 public class BookingEntryDto {
     private Long id;
@@ -24,6 +27,4 @@ public class BookingEntryDto {
 
     @NotNull
     private Long itemId;
-
-
 }

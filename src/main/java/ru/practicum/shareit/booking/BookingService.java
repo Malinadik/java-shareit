@@ -16,7 +16,7 @@ public interface BookingService {
 
     BookingDto getBookingById(@RequestHeader("X-Sharer-User-Id") Long id, @PathVariable Long bookingId);
 
-    List<BookingDto> getAllBookingByState(Long id, State state);
+    List<BookingDto> getAllBookingByState(Long id, State state, int from, int size) throws ValidationException;
 
-    List<BookingDto> getAllOwnersBookingByState(Long id, State state);
+    List<BookingDto> getAllOwnersBookingByState(Long id, State state, int from, int size) throws ValidationException;
 }

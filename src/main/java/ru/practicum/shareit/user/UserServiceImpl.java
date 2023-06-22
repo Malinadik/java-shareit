@@ -3,6 +3,8 @@ package ru.practicum.shareit.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.ItemRepository;
@@ -54,8 +56,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(Long userId) {
+        int page = 1 / 20;
+        Pageable pageable = PageRequest.of(page, 20);
         if (userRepository.existsById(userId)) {
-            itemRepository.deleteAll(itemRepository.findAllByOwnerId(userId));
+            itemRepository.deleteAll(itemRepository.findAllByOwnerIdOrderById(userId, pageable));
             userRepository.deleteById(userId);
         }
     }

@@ -1,18 +1,23 @@
 package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.BookingEntryDto;
 import ru.practicum.shareit.exceptions.NotSupportedStateException;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/bookings")
 @RequiredArgsConstructor
+@Validated
 public class BookingController {
 
     private final BookingService bookingService;
@@ -34,16 +39,22 @@ public class BookingController {
         return bookingService.getBookingById(id, bookingId);
     }
 
+    @Validated
     @GetMapping()
     public List<BookingDto> getAllBookingByState(@RequestHeader("X-Sharer-User-Id") Long id,
-                                                 @RequestParam(defaultValue = "ALL") String state)  {
-        return bookingService.getAllBookingByState(id, convert(state));
+                                                 @RequestParam(defaultValue = "ALL") String state,
+                                                 @RequestParam(defaultValue = "0") @Min(0) int from,
+                                                 @RequestParam(defaultValue = "20") @Positive int size) throws ValidationException {
+        return bookingService.getAllBookingByState(id, convert(state), from, size);
     }
 
+    @Validated
     @GetMapping("/owner")
     public List<BookingDto> getAllItemsBookings(@RequestHeader("X-Sharer-User-Id") Long id,
-                                                @RequestParam(defaultValue = "ALL") String state) {
-        return bookingService.getAllOwnersBookingByState(id, convert(state));
+                                                @RequestParam(defaultValue = "ALL") String state,
+                                                @Min(0) @RequestParam(defaultValue = "0") int from,
+                                                @RequestParam(defaultValue = "20") @Positive int size) throws ValidationException {
+        return bookingService.getAllOwnersBookingByState(id, convert(state), from, size);
     }
 
     public static State convert(String state) {
