@@ -17,7 +17,7 @@ class ItemMapperTest {
         ItemDto itemDto = ItemMapper.toItemDto(item);
         assertEquals(item.getId(), itemDto.getId());
         assertEquals(item.getName(), itemDto.getName());
-        assertEquals(item.getOwner(), itemDto.getOwner());
+        assertEquals(item.getOwner().getId(), itemDto.getOwner().getId());
         assertEquals(item.getDescription(), itemDto.getDescription());
         assertEquals(item.getAvailable(), itemDto.getAvailable());
         assertNull(itemDto.getRequestId());
@@ -29,7 +29,7 @@ class ItemMapperTest {
         Item item = ItemMapper.toItem(itemDto);
         assertEquals(itemDto.getId(), item.getId());
         assertEquals(itemDto.getName(), item.getName());
-        assertEquals(itemDto.getOwner(), item.getOwner());
+        assertEquals(itemDto.getOwner().getId(), item.getOwner().getId());
         assertEquals(itemDto.getDescription(), item.getDescription());
         assertEquals(itemDto.getAvailable(), item.getAvailable());
     }

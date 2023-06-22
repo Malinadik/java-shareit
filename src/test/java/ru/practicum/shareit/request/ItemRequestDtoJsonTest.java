@@ -28,7 +28,7 @@ public class ItemRequestDtoJsonTest {
         objectMapper.registerModule(new JavaTimeModule());
         ItemRequestDto itemRequestDto = ItemRequestDto.builder().id(1L)
                 .description("Test description").requestor(new ItemRequestDto.User())
-                .created(Timestamp.valueOf(LocalDateTime.of(2023, 5, 1, 13, 0))).build();
+                .created(Timestamp.valueOf(LocalDateTime.of(2023, 5, 1, 10, 0))).build();
 
         String expectedJson = "{\"id\":1,\"description\":\"Test description\",\"requestor\"" +
                 ":{\"id\":null,\"name\":null,\"email\":null},\"created\":\"2023-05-01T10:00:00.000+00:00\"}";
@@ -42,7 +42,7 @@ public class ItemRequestDtoJsonTest {
         objectMapper.registerModule(new JavaTimeModule());
         String json = "{\"id\":1,\"description\":\"Test description\"," +
                 "\"requestor\":{},\"created\":\"2023-05-01T10:00:00.000+00:00\"}";
-        ItemRequestDto expectedItemRequestDto = ItemRequestDto.builder().id(1L).description("Test description").requestor(ItemRequestDto.User.builder().build()).created(Timestamp.valueOf(LocalDateTime.of(2023, 5, 1, 13, 0))).build();
+        ItemRequestDto expectedItemRequestDto = ItemRequestDto.builder().id(1L).description("Test description").requestor(ItemRequestDto.User.builder().build()).created(Timestamp.valueOf(LocalDateTime.of(2023, 5, 1, 10, 0))).build();
 
         ItemRequestDto actualItemRequestDto = objectMapper.readValue(json, ItemRequestDto.class);
 
