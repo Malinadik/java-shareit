@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,14 +26,21 @@ public class BookingRepositoryIntegrationTest {
     @Autowired
     private BookingRepository bookingRepository;
 
+    User user;
+    Item item1;
+    User user1;
+
+    @BeforeEach
+    public void beforeEach() {
+        user = makeUser();
+        entityManager.persist(user);
+        item1 = Item.builder().owner(user).build();
+        entityManager.persist(item1);
+        user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
+        entityManager.persist(user1);
+    }
     @Test
     public void testFindAllByBookerId() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).build();
         Booking booking3 = Booking.builder().booker(user1).item(item1).build();
@@ -50,12 +58,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByBookerIdAndStatus() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Status status = Status.APPROVED;
         Booking booking1 = Booking.builder().booker(user).item(item1).status(Status.APPROVED).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).status(Status.APPROVED).build();
@@ -73,12 +75,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByBookerIdAndEndBefore() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().minusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().minusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user1).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -95,12 +91,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByBookerIdAndStartAfter() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user1).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -117,12 +107,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByBookerIdAndStartBeforeAndEndAfter() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -139,12 +123,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByItemOwnerIdAndStatus() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Status status = Status.APPROVED;
         Booking booking1 = Booking.builder().booker(user).item(item1).status(Status.APPROVED).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).status(Status.APPROVED).build();
@@ -162,12 +140,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByItemOwnerIdAndEndBefore() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().minusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().minusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -184,12 +156,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByItemOwnerIdAndStartAfter() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -206,12 +172,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     public void testFindAllByItemOwnerIdAndStartBeforeAndEndAfter() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
-        User user1 = User.builder().name("TestUser1").email("test1@mail.com").build();
-        entityManager.persist(user1);
         Booking booking1 = Booking.builder().booker(user).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking2 = Booking.builder().booker(user).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         Booking booking3 = Booking.builder().booker(user).item(item1).start(LocalDateTime.now().minusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
@@ -228,10 +188,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     void findByItemId() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
         Booking booking1 = Booking.builder().booker(user).item(item1).status(Status.WAITING).start(LocalDateTime.now().plusHours(2)).end(LocalDateTime.now().plusHours(1)).build();
         entityManager.persist(booking1);
         entityManager.flush();
@@ -243,9 +199,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     void existsByBookerIdAndEndBeforeAndStatus() {
-        User user = makeUser();
-        entityManager.persist(user);
-
         Booking booking1 = Booking.builder().booker(user).end(LocalDateTime.now().minusHours(1)).status(Status.WAITING).build();
         entityManager.persist(booking1);
         Boolean exist = bookingRepository.existsByBookerIdAndEndBeforeAndStatus(user.getId(), LocalDateTime.now(), Status.WAITING);
@@ -254,10 +207,6 @@ public class BookingRepositoryIntegrationTest {
 
     @Test
     void findAllByItemOwnerId() {
-        User user = makeUser();
-        entityManager.persist(user);
-        Item item1 = Item.builder().owner(user).build();
-        entityManager.persist(item1);
         Item item2 = Item.builder().build();
         entityManager.persist(item2);
         Booking booking1 = Booking.builder().booker(user).item(item1).end(LocalDateTime.now().minusHours(1)).status(Status.WAITING).build();
