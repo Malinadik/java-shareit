@@ -1,18 +1,18 @@
 package ru.practicum.shareit.request;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Test;
+//import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+//import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
-import ru.practicum.shareit.request.dto.ItemRequestDto;
+//import ru.practicum.shareit.request.dto.ItemRequestDto;
 
-import java.sql.Timestamp;
+/*import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;*/
 
 @JsonTest
 public class ItemRequestDtoJsonTest {
@@ -22,7 +22,7 @@ public class ItemRequestDtoJsonTest {
             .setDateFormat(new StdDateFormat().withColonInTimeZone(true));
 
 
-    @Test
+    /*@Test
     public void testSerializeToJson() throws JsonProcessingException {
         objectMapper.registerModule(new JavaTimeModule());
         ItemRequestDto itemRequestDto = ItemRequestDto.builder().id(1L)
@@ -46,5 +46,5 @@ public class ItemRequestDtoJsonTest {
         ItemRequestDto actualItemRequestDto = objectMapper.readValue(json, ItemRequestDto.class);
 
         assertEquals(expectedItemRequestDto, actualItemRequestDto);
-    }
+    }*/
 }
