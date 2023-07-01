@@ -13,4 +13,10 @@ public class ErrorHandler {
     public ErrorResponse handleWrongState(final NotSupportedStateException e) {
         return new ErrorResponse(e.getMessage(), e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleUnhandledExceptions(final Exception e) {
+        return new ErrorResponse(e.getMessage(), e.getMessage());
+    }
 }
