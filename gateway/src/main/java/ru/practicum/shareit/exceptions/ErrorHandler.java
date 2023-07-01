@@ -14,9 +14,9 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage(), e.getMessage());
     }
 
-    @ExceptionHandler
+    /*@ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleUnhandledExceptions(final Throwable e) {
+    public ErrorResponse handleUnhandledExceptions(final Exception e) {
         return new ErrorResponse(e.getMessage(), e.getMessage());
-    }
+    }*/
 }
