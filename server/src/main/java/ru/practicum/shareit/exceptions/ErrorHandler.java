@@ -35,7 +35,7 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleWrongState(final NotSupportedStateException e) {
-        return new ErrorResponse(e.getMessage(), e.getMessage());
+        return new ErrorResponse("NotSupportedStateException", e.getMessage());
     }
 
 }
